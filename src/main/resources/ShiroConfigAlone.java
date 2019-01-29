@@ -1,5 +1,6 @@
-package com.huarui.config;
+package templates;
 
+import com.huarui.config.MyShiroRealm;
 import com.huarui.entity.Resource;
 import com.huarui.service.OperatorService;
 import com.huarui.service.ResourceService;
