@@ -19,6 +19,11 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<Resource> getResourcesByOperator(String operatorId) {
-        return null;
+        return resourceDao.findResourcesByOperator(operatorId);
+    }
+
+    @Override
+    public List<Resource> findAllByAutho() {
+        return resourceDao.findAllByAutho();
     }
 }

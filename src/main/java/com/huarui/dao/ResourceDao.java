@@ -13,4 +13,7 @@ public interface ResourceDao extends JpaRepository<Resource, String> {
     @Query("select distinct r.resources from Operator as o left join o.roles as r where o.id = ?1")
     public List<Resource> findResourcesByOperator(String operatorId);
 
+    @Query("from Resource where authorization=true ")
+    public List<Resource> findAllByAutho();
+
 }

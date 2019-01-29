@@ -2,7 +2,6 @@ package com.huarui.config;
 
 import com.huarui.entity.Operator;
 import com.huarui.entity.Resource;
-import com.huarui.entity.Role;
 import com.huarui.service.OperatorService;
 import com.huarui.service.ResourceService;
 import com.huarui.utils.PasswordUtil;
@@ -38,14 +37,19 @@ public class MyShiroRealm extends AuthorizingRealm{
         Operator operator = (Operator) principalCollection.getPrimaryPrincipal();
         //获得当前登录用户所拥有的所有资源
         List<Resource> resources = resourceService.getResourcesByOperator(operator.getId());
+        if(resources!=null && resources.size()>0){
+            for(Resource p:resources){
+                authorizationInfo.addStringPermission(p.getUrl());//添加权限
+            }
+        }
 
-        //授权过程
+       /* //授权过程
         for(Role role:operator.getRoles()){
             authorizationInfo.addRole(role.getName());//添加角色
             for(Resource p:role.getResources()){
                 authorizationInfo.addStringPermission(p.getUrl());//添加权限
             }
-        }
+        }*/
         return authorizationInfo;
     }
 
@@ -59,13 +63,13 @@ public class MyShiroRealm extends AuthorizingRealm{
         Operator operator = operatorService.findByCode(usercode);
         if (operator==null){
             throw new AuthenticationException("用户编号不存在");
-        }else if(operator.getPassword().equals(PasswordUtil.saltAndMd5(password,operator.getName(),2))){
+        }else if(!operator.getPassword().equals(PasswordUtil.saltAndMd5(password,operator.getName(),2))){
             throw new AuthenticationException("密码不正确");
         }
         //返回认证信息由父类 进行认证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 operator, //用户名
-                operator.getPassword(), //密码
+                password, //密码
                 ByteSource.Util.bytes(operator.getName()),//盐
                 getName()  //realm name
         );

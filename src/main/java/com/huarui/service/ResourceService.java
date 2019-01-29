@@ -11,4 +11,6 @@ public interface ResourceService {
 
     List<Resource> getResourcesByOperator(String operatorId);
 
+    List<Resource> findAllByAutho();
+
 }

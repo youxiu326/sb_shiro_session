@@ -9,6 +9,20 @@
 
 <h3>这是登录页面</h3>
 
+<form action="loginAction">
+    编号:<input name="code"/>
+    <br/>
+    密码:<input name="password"/>
+    <br/>
+    <input type="submit" value="登录">
+</form>
+
+<br/>
+
+<a href="logout" target="_blank">登出</a>
+
+<br/>
+
 <form action="register">
     姓名:<input name="name"/>
     <br/>
@@ -18,6 +32,17 @@
     <br/>
     <input type="submit" value="注册">
 </form>
+
+
+<br/>
+<a href="/to/add">去添加界面(admin角色可以访问)</a>
+<br/>
+<a href="/to/update">去修改界面(admin角色可以访问)</a>
+<br/>
+<a href="/to/list">去列表界面(admin和test 角色可以访问)</a>
+<br/>
+<a href="/to/open">去开放界面(登录了可以访问)</a>
+<br/>
 
 
 </body>
