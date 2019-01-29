@@ -29,7 +29,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import javax.servlet.ServletRequest;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -38,6 +37,7 @@ import java.util.Map;
 
 /**
  * Created by lihui on 2019/1/29.
+ * 实现session共享
  * shiro配置类
  */
 @Configuration

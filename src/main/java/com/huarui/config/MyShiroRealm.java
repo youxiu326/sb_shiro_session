@@ -43,13 +43,6 @@ public class MyShiroRealm extends AuthorizingRealm{
             }
         }
 
-       /* //授权过程
-        for(Role role:operator.getRoles()){
-            authorizationInfo.addRole(role.getName());//添加角色
-            for(Resource p:role.getResources()){
-                authorizationInfo.addStringPermission(p.getUrl());//添加权限
-            }
-        }*/
         return authorizationInfo;
     }
 
