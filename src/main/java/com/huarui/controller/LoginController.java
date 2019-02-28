@@ -9,10 +9,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lihui on 2019/1/29.
@@ -47,6 +47,16 @@ public class LoginController {
     @GetMapping("/to/{url}")
     public String path(@PathVariable("url")String path){
         return path;
+    }
+
+
+    @PostMapping("/ajax")
+    public @ResponseBody Map ajax(){
+        Map map = new HashMap<>();
+        map.put("state","200");
+        map.put("msg","成功获取到数据");
+        map.put("data","youxiu326@163.com");
+        return map;
     }
 
     /**

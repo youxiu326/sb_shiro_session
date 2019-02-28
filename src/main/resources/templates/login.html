@@ -37,15 +37,44 @@
 
 
 <br/>
-<a href="/to/add">去添加界面(admin角色可以访问)</a>
+<a href="/to/add" target="_blank">去添加界面(admin角色可以访问)</a>
 <br/>
-<a href="/to/update">去修改界面(admin角色可以访问)</a>
+<a href="/to/update"  target="_blank">去修改界面(admin角色可以访问)</a>
 <br/>
-<a href="/to/list">去列表界面(admin和test 角色可以访问)</a>
+<a href="/to/list" target="_blank">去列表界面(admin和test 角色可以访问)</a>
 <br/>
-<a href="/to/open">去开放界面(登录了可以访问)</a>
+<a href="/to/open" target="_blank">去开放界面(登录了可以访问)</a>
 <br/>
+
+
+<input style="margin-left: 300px;" type="button" onclick="callAjax()" value="测试发送ajax请求(登录才可调用)"/>
+
 
 
 </body>
+
+<script src="/jquery-1.11.3.min.js"></script>
+<script>
+    function callAjax(){
+
+        $.ajax({
+            type: 'POST',
+            url: "ajax",
+            data: {},
+            dataType: "json",
+            success: function(response){
+                alert(response);
+                console.log(response);
+            },
+            error:function(response){
+                alert(response.status);//自定义错误状态码 401
+                console.log(response.status);
+            }
+
+        });
+
+    }
+
+</script>
+
 </html>
