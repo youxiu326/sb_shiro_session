@@ -46,7 +46,47 @@ public class MyShiroRealm extends AuthorizingRealm{
         return authorizationInfo;
     }
 
-    //认证
+    //认证 需要判断当前是密码登录 还是 验证码登录
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+
+        if (authenticationToken instanceof CaptchaAuthenticationToken){//如果是验证码登录
+            CaptchaAuthenticationToken upToken = (CaptchaAuthenticationToken)authenticationToken;
+            String usercode = (String)upToken.getPrincipal();
+            Operator operator = operatorService.findByCode(usercode);
+            if (operator==null){
+                throw new AuthenticationException("用户编号不存在");
+            }
+            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                    operator, //用户名
+                    upToken.getServerCaptcha(),//服务端的验证码
+                    getName()//realm name
+            );
+            return authenticationInfo;
+        }else{
+            //获取用户编号 与密码
+            UsernamePasswordToken upToken = (UsernamePasswordToken)authenticationToken;
+            String usercode = (String)upToken.getPrincipal();
+            String password = String.valueOf(upToken.getPassword());
+            Operator operator = operatorService.findByCode(usercode);
+            if (operator==null){
+                throw new AuthenticationException("用户编号不存在");
+            }else if(!operator.getPassword().equals(PasswordUtil.saltAndMd5(password,operator.getName(),2))){
+                throw new AuthenticationException("密码不正确");
+            }
+            //返回认证信息由父类 进行认证
+            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                    operator, //用户名
+                    password, //密码
+                    ByteSource.Util.bytes(operator.getName()),//盐
+                    getName()  //realm name
+            );
+            return authenticationInfo;
+        }
+    }
+
+
+/*
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         //获取用户编号 与密码
@@ -68,6 +108,7 @@ public class MyShiroRealm extends AuthorizingRealm{
         );
         return authenticationInfo;
     }
+    */
 
     //清空shiro缓存的权限
     public void clearAuthz(){

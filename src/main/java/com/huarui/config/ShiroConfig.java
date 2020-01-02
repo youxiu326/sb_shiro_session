@@ -73,6 +73,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/jquery-1.11.3.min.js", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginAction", "anon");
+        filterChainDefinitionMap.put("/sendCaptcha", "anon");
+        filterChainDefinitionMap.put("/captchaLogin", "anon");
         filterChainDefinitionMap.put("/register", "anon");
         //配置退出 过滤器,其中的具体的退出代码shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
